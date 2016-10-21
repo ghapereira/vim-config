@@ -45,6 +45,9 @@ nnoremap  <C-L> <C-W><C-L>
 nnoremap  <C-H> <C-W><C-H>
 " remap <,>+<Space> to remove search color
 nnoremap ,<Space> :nohlsearch
+" remap z, e c, to paste/nopaste
+nnoremap z, :set paste
+nnoremap c, :set nopaste
 set number              " show line number
 set relativenumber
 set autoindent          " autoindent based on last indent
@@ -64,6 +67,7 @@ set shiftwidth=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType c setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType cpp setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 set showcmd             " show last command in bottom bar
 set cursorline          " hihlight current line
@@ -91,6 +95,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 set ruler               " display the cursor position in the lower right corner
+set colorcolumn=80      " enforce 80 cols
 set smartindent
 set encoding=utf-8
 " let g:solarized_termcolors=256
