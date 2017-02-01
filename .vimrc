@@ -25,12 +25,20 @@ Plugin 'Lokaltog/vim-powerline'
 Plugin 'nvie/vim-flake8'
 " git status
 Plugin 'airblade/vim-gitgutter'
+" git wrapper
+Plugin 'tpope/vim-fugitive'
 " file browser
 Plugin 'scrooloose/NERDTree'
 " the silver searcher
 Plugin 'rking/ag.vim'
 " Flex / Bison syntax
 Plugin 'justinmk/vim-syntax-extra'
+" Count search matches
+Plugin 'henrik/vim-indexed-search'
+" Surround words
+Plugin 'tpope/vim-surround'
+" Repeat plugin commands (specifically surround)
+Plugin 'tpope/vim-repeat.git'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,10 +60,6 @@ set number              " show line number
 set relativenumber
 set autoindent          " autoindent based on last indent
 set ignorecase          " ignore case on search
-
-" colorscheme badwolf     " color scheme
-" set background=light
-" colorscheme solarized
 colorscheme atom-dark-256
 
 " tabs config
@@ -81,8 +85,6 @@ set nowrap              " display long lines as just one
 nnoremap gV `[v`]
 " the silver searcher, on vim
 set runtimepath^=~/.vim/bundle/ag
-" color after line 80
-" let &colorcolumn=join(range(81,999), ",")
 
 " startify on new tabs
 " Not satisfactory; each new file will be opened as Startify
@@ -98,13 +100,15 @@ set ruler               " display the cursor position in the lower right corner
 set colorcolumn=80      " enforce 80 cols
 set smartindent
 set encoding=utf-8
-" let g:solarized_termcolors=256
 set t_Co=256
 set scrolloff=8              " keep the cursor N lines under the top margin and above the bottom one
 
+" Folds
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* loadview
+
 " Sessions
 set ssop-=options       " do not store global and local variables in a session
-set ssop-=folds         " do not store folds
 
 " Emmet configs
 let g:user_emmet_install_global = 0
@@ -159,4 +163,3 @@ set laststatus=2
 
 " Cool files syntax
 au BufNewFile,BufRead *.cl setf cool
-
