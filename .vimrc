@@ -39,6 +39,10 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'tpope/vim-surround'
 " Repeat plugin commands (specifically surround)
 Plugin 'tpope/vim-repeat.git'
+" Show CSS colors on editing
+Plugin 'ap/vim-css-color'
+" Buffer tabline
+Plugin 'ap/vim-buftabline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -54,8 +58,8 @@ nnoremap  <C-H> <C-W><C-H>
 " remap <,>+<Space> to remove search color
 nnoremap ,<Space> :nohlsearch
 " remap z, e c, to paste/nopaste
-nnoremap z, :set paste
-nnoremap c, :set nopaste
+nnoremap z, :set paste<CR>
+nnoremap c, :set nopaste<CR>
 set number              " show line number
 set relativenumber
 set autoindent          " autoindent based on last indent
@@ -101,11 +105,14 @@ set colorcolumn=80      " enforce 80 cols
 set smartindent
 set encoding=utf-8
 set t_Co=256
-set scrolloff=8              " keep the cursor N lines under the top margin and above the bottom one
+set scrolloff=8         " keep the cursor N lines under the top margin and above the bottom one
+set nostartofline       " keep the cursor at the same vertical bar when moving
 
 " Folds
+set foldmethod=manual
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* loadview
+nnoremap <space> za
 
 " Sessions
 set ssop-=options       " do not store global and local variables in a session
@@ -115,37 +122,68 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 imap hh <C-y>,
 
-" TABS
-" Show tab number
-if exists("+showtabline")
-     function MyTabLine()
-         let s = ''
-         let t = tabpagenr()
-         let i = 1
-         while i <= tabpagenr('$')
-             let buflist = tabpagebuflist(i)
-             let winnr = tabpagewinnr(i)
-             let s .= '%' . i . 'T'
-             let s .= (i == t ? '%1*' : '%2*')
-             let s .= ' '
-             let s .= '[' . i . ']'
-             let s .= ' %*'
-             let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-             let file = bufname(buflist[winnr - 1])
-             let file = fnamemodify(file, ':p:t')
-             if file == ''
-                 let file = '[No Name]'
-             endif
-             let s .= file
-             let i = i + 1
-         endwhile
-         let s .= '%T%#TabLineFill#%='
-         let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-         return s
-     endfunction
-     set stal=1
-     set tabline=%!MyTabLine()
-endif
+" " TABS
+" " Show tab number
+" if exists("+showtabline")
+"      function MyTabLine()
+"          let s = ''
+"          let t = tabpagenr()
+"          let i = 1
+"          while i <= tabpagenr('$')
+"              let buflist = tabpagebuflist(i)
+"              let winnr = tabpagewinnr(i)
+"              let s .= '%' . i . 'T'
+"              let s .= (i == t ? '%1*' : '%2*')
+"              let s .= ' '
+"              let s .= '[' . i . ']'
+"              let s .= ' %*'
+"              let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+"              let file = bufname(buflist[winnr - 1])
+"              let file = fnamemodify(file, ':p:t')
+"              if file == ''
+"                  let file = '[No Name]'
+"              endif
+"              let s .= file
+"              let i = i + 1
+"          endwhile
+"          let s .= '%T%#TabLineFill#%='
+"          let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+"          return s
+"      endfunction
+"      set stal=1
+"      set tabline=%!MyTabLine()
+" endif
+
+""""" Working with buffers
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nnoremap <leader>b :ls<cr>:b<space>
+
+" Remap Ctrl+n/Ctrl+m to change buffers
+nnoremap <C-M> :bnext<CR>
+nnoremap <C-N> :bprev<CR>
+
+""" Buftabline options
+let g:buftabline_numbers = 1
+let g:buftabline_separators = 1
+let g:buftabline_indicators = 1
 
 " Toggle highlighting for the current word on and off (Enter).
 let g:highlighting = 0
@@ -159,7 +197,14 @@ function! Highlighting()
  return ":silent set hlsearch\<CR>"
 endfunction
 
-set laststatus=2
+set laststatus=2    " display statusline
 
 " Cool files syntax
 au BufNewFile,BufRead *.cl setf cool
+
+" 'tilde backup files' to be created in a different
+" dir so as not to clutter up the current file's directory
+set backupdir=~/.vim/tmp
+
+" Disable 'swap files' (eg. .myfile.txt.swp) from being created
+set noswapfile
