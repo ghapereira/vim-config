@@ -43,6 +43,8 @@ Plugin 'tpope/vim-repeat.git'
 Plugin 'ap/vim-css-color'
 " Buffer tabline
 Plugin 'ap/vim-buftabline'
+" orgmode
+Plugin 'jceb/vim-orgmode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -56,7 +58,7 @@ nnoremap  <C-K> <C-W><C-K>
 nnoremap  <C-L> <C-W><C-L>
 nnoremap  <C-H> <C-W><C-H>
 " remap <,>+<Space> to remove search color
-nnoremap ,<Space> :nohlsearch
+nnoremap ,<Space> :nohlsearch<CR>
 " remap z, e c, to paste/nopaste
 nnoremap z, :set paste<CR>
 nnoremap c, :set nopaste<CR>
@@ -198,13 +200,6 @@ function! Highlighting()
 endfunction
 
 set laststatus=2    " display statusline
-
-" Cool files syntax
-au BufNewFile,BufRead *.cl setf cool
-
-" 'tilde backup files' to be created in a different
-" dir so as not to clutter up the current file's directory
-set backupdir=~/.vim/tmp
 
 " Disable 'swap files' (eg. .myfile.txt.swp) from being created
 set noswapfile
