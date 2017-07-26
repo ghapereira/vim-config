@@ -45,10 +45,16 @@ Plugin 'ap/vim-css-color'
 Plugin 'ap/vim-buftabline'
 " orgmode
 Plugin 'jceb/vim-orgmode'
+" speeddating (needed by orgmode)
+Plugin 'tpope/vim-speeddating'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" leader key
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
 
 syntax on               " syntax coloring; enable uses from theme, on overrides for defaults
 nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
@@ -114,7 +120,7 @@ set nostartofline       " keep the cursor at the same vertical bar when moving
 set foldmethod=manual
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* loadview
-nnoremap <space> za
+" nnoremap <space> za
 
 " Sessions
 set ssop-=options       " do not store global and local variables in a session
@@ -200,6 +206,11 @@ function! Highlighting()
 endfunction
 
 set laststatus=2    " display statusline
+
+" Syntax coloring for Vagrantfiles
+augroup filetypedetect
+  au BufRead,BufNewFile Vagrantfile set filetype=ruby
+augroup END
 
 " Disable 'swap files' (eg. .myfile.txt.swp) from being created
 set noswapfile
