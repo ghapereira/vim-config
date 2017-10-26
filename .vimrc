@@ -47,6 +47,8 @@ Plugin 'ap/vim-buftabline'
 Plugin 'jceb/vim-orgmode'
 " speeddating (needed by orgmode)
 Plugin 'tpope/vim-speeddating'
+" code completion
+Plugin 'valloric/youcompleteme'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -68,11 +70,22 @@ nnoremap ,<Space> :nohlsearch<CR>
 " remap z, e c, to paste/nopaste
 nnoremap z, :set paste<CR>
 nnoremap c, :set nopaste<CR>
+
+" remap rot13
+nnoremap r, ggVGg?
+
 set number              " show line number
 set relativenumber
 set autoindent          " autoindent based on last indent
 set ignorecase          " ignore case on search
 colorscheme atom-dark-256
+
+" solve backspace issue
+set backspace=indent,eol,start
+
+" Splits
+set splitbelow
+set splitright
 
 " tabs config
 set tabstop=2           " number of visual spaces per TAB
@@ -82,6 +95,7 @@ set shiftwidth=2
 " specific tabs config for filetype
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType go setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType c setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType cpp setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
