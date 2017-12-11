@@ -49,6 +49,8 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 " code completion
 Plugin 'valloric/youcompleteme'
+" colorscheme management
+Plugin 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -78,7 +80,7 @@ set number              " show line number
 set relativenumber
 set autoindent          " autoindent based on last indent
 set ignorecase          " ignore case on search
-colorscheme atom-dark-256
+colorscheme wombat
 
 " solve backspace issue
 set backspace=indent,eol,start
